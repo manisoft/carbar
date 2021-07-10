@@ -10,19 +10,28 @@ const App = () => {
   const [carNumber, setCarNumber] = useState([2, 5, 0, 0, 0, 0, 0, 0, 0]);
 
 
-  const addCarHandler = (nameofCar) => {
-    setCarName(carName.push(nameofCar));
+  const carClickHandler = (el) => {
+    let index = carName.indexOf(el);
+    let temp = carNumber;
+    temp.splice(index, 1, carNumber[index] + 1);
+    setCarNumber([...temp]);
   }
 
   const resetCarNumber = () => {
-    setCarNumber(carNumber.forEach(el => el = 0));
+    setCarNumber(new Array(carNumber.length).fill(0));
+  }
+
+  const addCarHandler = () => {
+    /*     setCarName(carName.push(nameofCar));
+        setCarNumber(carNumber.push(0)); */
+    alert('YOU WILL ADD CARS WITH MODAL HERE!');
   }
 
 
   let carShow = (
     carName.map(el => {
       return (
-        <Button title={el} />
+        <Button title={el} key={el} onClick={() => carClickHandler(el)} />
       )
     })
   );
@@ -30,12 +39,14 @@ const App = () => {
 
   return (
     <div className="App">
-      <div>Bar Chart</div>
+      <div className="chart">Bar Chart</div>
       <div className="content">
         {carShow}
       </div>
-      <ActionButton title='Add New Car' onClick={addCarHandler} />
-      <ActionButton title='Reset Counters' onClick={resetCarNumber} />
+      <div className="buttonContainer">
+        <ActionButton title='Add New Car' onClick={addCarHandler} />
+        <ActionButton title='Reset Counters' onClick={resetCarNumber} />
+      </div>
     </div>
   );
 }
