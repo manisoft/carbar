@@ -72,7 +72,9 @@ const App = () => {
     let temp2 = carNumber;
     temp2.splice(index, 0, 0);
     setCarNumber([...temp2]);
-    setbarColor([...barColor, getRandomColor]);
+    let temp3 = barColor;
+    temp3.splice(index, 0, getRandomColor());
+    setbarColor([...temp3]);
   }
 
 
