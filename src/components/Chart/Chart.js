@@ -1,10 +1,24 @@
 import React from 'react';
-import classes from './Chart.module.css';
+import { Bar } from 'react-chartjs-2';
 
-const Chart = (props) => {
+const BarChart = (props) => {
+
+    const { labels, label, barColor, dataSet } = props;
+
+    const data = {
+        labels: labels,
+        datasets: [{
+            label: label,
+            backgroundColor: barColor,
+            borderColor: 'white',
+            data: dataSet
+        }]
+    };
+
     return (
-        <div className={classes.main}></div>
+        <Bar data={data} />
     );
 };
 
-export default Chart;
+export default BarChart;
+
