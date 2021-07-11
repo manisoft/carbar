@@ -10,11 +10,11 @@ import { generateColors, getRandomColor } from './utils/color-util';
 const App = () => {
 
   let cars = ['BMW', 'Nissan', 'Honda', 'Ford', 'VW', 'Hyundai', 'RAM', 'Chevy', 'MB'];
-  //to solve sorting input like 'MB' that was before 'Mazda'. used the callback function that would check items without case sensitivity.
+  //Refer to README Notes.
   cars.sort((a, b) => a.localeCompare(b, 'en', { sensitivity: 'base' }));
 
   let availableCars = ['Toyota', 'Jeep', 'Lexus', 'Audi', 'Volvo', 'GMC', 'Buick', 'Acura', 'Dodge', 'Lincoln', 'Mazda', 'Land Rover', 'Tesla', 'Kia', 'Chrysler', 'Pontiac', 'Infiniti', 'Mitsubishi', 'Fiat', 'Mini', 'Genesis', 'Suzuki', 'Renault'];
-  //to solve sorting input like 'MB' that was before 'Mazda'. used the callback function that would check items without case sensitivity.
+  //Refer to README Notes.
   availableCars.sort((a, b) => a.localeCompare(b, 'en', { sensitivity: 'base' }));
 
   const [carNames, setCarNames] = useState([...cars]);
@@ -86,7 +86,7 @@ const App = () => {
           labels={carNames}
           label='Car Numbers'
           barColor={barColor}
-          data={carNumber}
+          dataSet={carNumber}
         />
       </div>
       <div className="content">

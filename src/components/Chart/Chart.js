@@ -3,13 +3,15 @@ import { Bar } from 'react-chartjs-2';
 
 const BarChart = (props) => {
 
+    const { labels, label, barColor, dataSet } = props;
+
     const data = {
-        labels: props.labels,
+        labels: labels,
         datasets: [{
-            label: props.label,
-            backgroundColor: props.barColor,
-            borderColor: '',
-            data: props.data
+            label: label,
+            backgroundColor: barColor,
+            borderColor: 'white',
+            data: dataSet
         }]
     };
 
