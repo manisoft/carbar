@@ -38,8 +38,6 @@ To reset the charts data and number of cars click on 'Reset Counters' button.
 
 To see the details of each car and it's number's simply hover the mouse on its bar. then you can see the name and actual number of that specific car.
 
-# Project
-
 # Notes
 
 - Sorting Problem: without having a function in sort method. the 'MB' was before 'Mazda' as it was all capital letters. to solve this issue we use this function to check them without case-sensitivity.
