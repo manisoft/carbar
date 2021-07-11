@@ -1,56 +1,40 @@
 import React, { useState, useEffect } from 'react'
 import './App.css';
-import { Bar } from 'react-chartjs-2';
 
 import Button from './components/Button/Button';
 import ActionButton from './components/ActionButton/ActionButton';
-
-const getRandomColor = () => {
-  let letters = '0123456789ABCDEF';
-  let color = '#';
-  for (let i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
-}
+import CarModal from './components/Modal/CarModal';
+import BarChart from './components/Chart/Chart';
+import { generateColors, getRandomColor } from './utils/color-util';
 
 const App = () => {
 
-  let carsBrand = ['BMW', 'Nissan', 'Honda', 'Ford', 'VW', 'Hyundai', 'RAM', 'Chevy', 'MB'];
-  carsBrand.sort();
-  const availableCars = ['Toyota', 'Jeep', 'Lexus', 'Audi', 'Volvo', 'GMC', 'Buick', 'Acura', 'Dodge', 'Lincoln', 'Mazda', 'Land Rover', 'Tesla', 'Kia', 'Chrysler', 'Pontiac', 'Infiniti', 'Mitsubishi', 'Fiat', 'Mini', 'Genesis', 'Suzuki', 'Renault'];
-  availableCars.sort();
+  let cars = ['BMW', 'Nissan', 'Honda', 'Ford', 'VW', 'Hyundai', 'RAM', 'Chevy', 'MB'];
+  //to solve sorting input like 'MB' that was before 'Mazda'. used the callback function that would check items without case sensitivity.
+  cars.sort((a, b) => a.localeCompare(b, 'en', { sensitivity: 'base' }));
 
+  let availableCars = ['Toyota', 'Jeep', 'Lexus', 'Audi', 'Volvo', 'GMC', 'Buick', 'Acura', 'Dodge', 'Lincoln', 'Mazda', 'Land Rover', 'Tesla', 'Kia', 'Chrysler', 'Pontiac', 'Infiniti', 'Mitsubishi', 'Fiat', 'Mini', 'Genesis', 'Suzuki', 'Renault'];
+  //to solve sorting input like 'MB' that was before 'Mazda'. used the callback function that would check items without case sensitivity.
+  availableCars.sort((a, b) => a.localeCompare(b, 'en', { sensitivity: 'base' }));
 
+  const [carNames, setCarNames] = useState([...cars]);
+  const [addCar, setaddCar] = useState([...availableCars]);
 
-
-  const [carName, setCarName] = useState([...carsBrand]);
   //this is initial value just in case to see charts in action.
   const [carNumber, setCarNumber] = useState([9, 8, 7, 6, 5, 4, 3, 2, 1]);
   const [barColor, setbarColor] = useState([]);
+  const [modal, setModal] = useState('none');
 
-  let colors = [];
-  for (let i = 0; i < carName.length; i++) {
-    colors.push(getRandomColor());
-  }
+  let colors = generateColors(carNames);
 
   useEffect(() => {
     setbarColor([...colors]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const data = {
-    labels: carName,
-    datasets: [{
-      label: 'Car Numbers',
-      backgroundColor: barColor,
-      borderColor: '',
-      data: carNumber,
-    }]
-  };
 
   const carClickHandler = (el) => {
-    let index = carName.indexOf(el);
+    let index = carNames.indexOf(el);
     let temp = carNumber;
     temp.splice(index, 1, carNumber[index] + 1);
     setCarNumber([...temp]);
@@ -60,47 +44,61 @@ const App = () => {
     setCarNumber(new Array(carNumber.length).fill(0));
   }
 
-
-
   const addCarHandler = (brand) => {
-    let temp = carName;
+    let temp = carNames;
     temp.push(brand);
-    temp.sort();
-    console.log(temp);
-    setCarName(temp);
-    let index = carName.indexOf(brand);
+    temp.sort((a, b) => a.localeCompare(b, 'en', { sensitivity: 'base' }));
+    setCarNames(temp);
+    let index = carNames.indexOf(brand);
     let temp2 = carNumber;
     temp2.splice(index, 0, 0);
     setCarNumber([...temp2]);
     let temp3 = barColor;
     temp3.splice(index, 0, getRandomColor());
     setbarColor([...temp3]);
+    let temp4 = addCar;
+    temp4.splice(addCar.indexOf(brand), 1);
+    setaddCar([...temp4]);
   }
 
+  const modalOn = () => {
+    setModal('block');
+  }
 
-
-
+  const modaldismiss = () => {
+    setModal('none');
+  }
 
   let carShow = (
-    carName.map((car, index) => {
+    carNames.map((car, index) => {
       return (
         <Button title={car} key={index} onClick={() => carClickHandler(car)} />
       )
     })
   );
 
+  let modalViewer = (<CarModal cars={addCar} carAdd={addCarHandler} setModal={modaldismiss} modal={modal} />);
 
+  if (!modal) {
+    modalViewer = (<CarModal cars={addCar} carAdd={addCarHandler} setModal={modaldismiss} modal={modal} />);
+  }
 
   return (
     <div className="App">
+      {modalViewer}
       <div className="chart">
-        <Bar data={data} />
+        <BarChart
+          labels={carNames}
+          label='Car Numbers'
+          barColor={barColor}
+          data={carNumber}
+        />
       </div>
       <div className="content">
         {carShow}
       </div>
       <div className="buttonContainer">
-        <ActionButton title='Add New Car' onClick={() => addCarHandler('Jian')} />
+        <ActionButton title='Add New Car' onClick={modalOn} />
         <ActionButton title='Reset Counters' onClick={resetCarNumber} />
       </div>
     </div>
