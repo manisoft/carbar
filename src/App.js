@@ -77,15 +77,10 @@ const App = () => {
     })
   );
 
-  let modalViewer = (<CarModal cars={addCar} carAdd={addCarHandler} setModal={modaldismiss} modal={modal} />);
-
-  if (!modal) {
-    modalViewer = (<CarModal cars={addCar} carAdd={addCarHandler} setModal={modaldismiss} modal={modal} />);
-  }
 
   return (
     <div className="App">
-      {modalViewer}
+      <CarModal cars={addCar} carAdd={addCarHandler} setModal={modaldismiss} modal={modal} />
       <div className="chart">
         <BarChart
           labels={carNames}
