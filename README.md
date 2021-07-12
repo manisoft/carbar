@@ -44,7 +44,8 @@ To see the details of each car and it's number's simply hover the mouse on its b
 
 # Room for improvements
 
-- instead of using seperate array to store car name and car number and even bar colors it is better to use array of object that each object has brand, quantity and bar-color to represent each car.
-- instead of having initial values as a hard coded data it is better to have seperate config file and export these kind of data there as an initial values.
-- instead of using third-party library for charts we could replace it by implementing the chart using SCSS.
-- adding unit test would be a great improvement.
+- Instead of using seperate array to store car name and car number and even bar colors it is better to use array of object that each object has brand, quantity and bar-color to represent each car.
+- Instead of having initial values as a hard coded data it is better to have seperate config file and export these kind of data there as an initial values.
+- Instead of using third-party library for charts we could replace it by implementing the chart using SCSS.
+- Adding unit test would be a great improvement.
+- It would be great to have fully responsive UI and different UI state for components like Button.
